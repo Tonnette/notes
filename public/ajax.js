@@ -1,12 +1,14 @@
 // var fs = require('fs');
 
-$(".saveIt").on("click", function (event) {
+// $(".saveIt").on("click", function (event) {
+    $("#save-btn").on("click", function (event) {
     event.preventDefault();
     var newNote = {
         title: $("#note-title").val().trim(),
         note: $("#note-input").val().trim(),
 
     };
+
 
     $.post("http://localhost:3000/api/notes", newNote)
         .then(function (data) {
@@ -43,7 +45,7 @@ function notesData() {
                 var userNote = mydata[i].note;
 
                 var divEl = $('<div>').addClass('div-body');
-     
+
 
                 // this is getting the data from api info for block"
                 var newSaveButton = $('<a class="btn btn-info btn-lg saveIt" role="button">save</a>')
@@ -63,6 +65,7 @@ function notesData() {
 
             }
         })
+    }
 
     // fs is a Node standard library package for reading and writing files
 
@@ -86,7 +89,7 @@ function notesData() {
     //     }
     // })
 
-}
+// }
 
 
 
