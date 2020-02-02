@@ -143,6 +143,7 @@
       var newNote = {
         title: $("#note-title").val().trim(),
         note: $("#note-input").val().trim(),
+
       };
 
       $.post("http://localhost:3000/api/notes", newNote)
@@ -199,21 +200,12 @@
             var mainTitleEl = $('<h2>').addClass('note-title');
             var noteTextEl = $('<textarea>').addClass("note-textarea");
 
-            // // var jumboEl = $('<div>').addClass('jumbotron')
-         
-            // var inputEl = $('<input>').addClass('Note Title');
-            // inputEl.text(userTitle)
 
             mainTitleEl.text(userTitle)
-            noteTextEl.text(userNote)
-            // userTitleEl.text(userTitle)
-
-           
+            noteTextEl.text(userNote)         
             newBlock.append(divEl)
             divEl.append(mainTitleEl)
             divEl.append(noteTextEl)
-            // inputEl.append(userTitle)
-            // userTitleEl.text(userTitle)
             divEl.append(newSaveButton)
             divEl.append(newDeleteButton)
 
