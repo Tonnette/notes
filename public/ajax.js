@@ -1,4 +1,4 @@
-// const fs = require('fs');
+// var fs = require('fs');
 
 $(".saveIt").on("click", function (event) {
     event.preventDefault();
@@ -43,17 +43,7 @@ function notesData() {
                 var userNote = mydata[i].note;
 
                 var divEl = $('<div>').addClass('div-body');
-                // var divContentEl = $('<div>').addClass('div-content');
-                // var userTitleEl = $('<strong>').addClass('list-group-item d-flex justify-content-between align-items-center')
-                // var userNoteEl = $('<li>')
-
-                // userTitleEl.text(userTitle)
-                // userNoteEl.text(userNote)
-
-                // newContentDiv.append(divEl)
-                // divEl.append(divContentEl)
-                // divContentEl.append(userTitleEl)
-                // divContentEl.append(userNoteEl)
+     
 
                 // this is getting the data from api info for block"
                 var newSaveButton = $('<a class="btn btn-info btn-lg saveIt" role="button">save</a>')
@@ -73,6 +63,28 @@ function notesData() {
 
             }
         })
+
+    // fs is a Node standard library package for reading and writing files
+
+    // fs.readFile("../db/data/db.json", "utf8", function (error, jsonString) {
+
+    //     if (error) {
+    //         return console.log(error);
+    //     }
+
+    //     console.log("file data: ", jsonString);
+
+    // });
+
+    // const jsonStringData = JSON.stringify(mydata)
+
+    // fs.appendFile('../db/data/db.json', jsonStringData, err => {
+    //     if (err) {
+    //         console.log('Error writing file', err)
+    //     } else {
+    //         console.log('Successfully wrote file')
+    //     }
+    // })
 
 }
 
