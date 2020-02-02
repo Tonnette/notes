@@ -7,95 +7,97 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Note Taker</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/flatly/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-    crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+    integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery.js"></script>
   <!-- <link rel="stylesheet" href="styles.css"> -->
 </head>
 <style>
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
 
-/* .save-note {
+  /* .save-note {
   display: none;
 } */
 
-.icons i {
-  margin-left: 15px;
-  margin-right: 15px;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
+  .icons i {
+    margin-left: 15px;
+    margin-right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
 
-.listNotes {
-  padding-left: 25px;
-}
+  .listNotes {
+    padding-left: 25px;
+  }
 
-.myNotesTitle {
-  font-weight: bold;
-}
+  .myNotesTitle {
+    font-weight: bold;
+  }
 
-.note-textarea, .note-title {
-  color: #000000;
-  width: 100%;
-  outline: none;
-  border: none;
-}
+  .note-textarea,
+  .note-title {
+    color: #000000;
+    width: 100%;
+    outline: none;
+    border: none;
+  }
 
-.note-textarea {
-  resize: none;
-  height: calc(100% - 63px);
-  padding-top: 15px;
-}
+  .note-textarea {
+    resize: none;
+    height: calc(100% - 63px);
+    padding-top: 15px;
+  }
 
-.note-title {
-  height: 50px;
-  margin-top: 13px;
-  font-size: 3rem;
-}
+  .note-title {
+    height: 50px;
+    margin-top: 13px;
+    font-size: 3rem;
+  }
 
-.note-title:read-only, .note-textarea:read-only {
-  color: #757575;
-}
+  .note-title:read-only,
+  .note-textarea:read-only {
+    color: #757575;
+  }
 
-.list-container .card {
-  height: calc(100vh - 70px);
-  border-bottom: none;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
+  .list-container .card {
+    height: calc(100vh - 70px);
+    border-bottom: none;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
 
-.list-container {
-  padding-left: 0;
-}
+  .list-container {
+    padding-left: 0;
+  }
 
-.div-body{
-  padding-bottom: 25px;
-}
+  .div-body {
+    padding-bottom: 25px;
+  }
 
-.list-container .list-group,
-.list-container .list-group-item:first-child,
-.list-container .card {
-  border-top: none;
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
-}
+  .list-container .list-group,
+  .list-container .list-group-item:first-child,
+  .list-container .card {
+    border-top: none;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+  }
 
-.list-container i {
-  font-size: 1.1rem;
-  cursor: pointer;
-}
+  .list-container i {
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
 
-.list-container .list-group-item {
-  border-left: none;
-  border-right: none;
-  padding: 20px;
-  cursor: pointer;
-}
-
+  .list-container .list-group-item {
+    border-left: none;
+    border-right: none;
+    padding: 20px;
+    cursor: pointer;
+  }
 </style>
 
 <body>
@@ -113,30 +115,38 @@ html, body {
         <div class="card listNotes">
           <h5 class="myNotesTitle">My Notes</h5>
           <ul class="list-group">
+
           </ul>
         </div>
       </div>
       <div class="col-8">
-        <button class="saveIt">my save button</button>
-        <button class="newOne">new note</button>
-        <button class="deleteOne">delete note</button>
-        <input class="note-title" id="note-title" placeholder="Note Title" maxlength="28" type="text">
-        <textarea class="note-textarea" id="note-input"  placeholder="Note Text"></textarea>
-        
+
+        <div class="jumbotron block">
+          <a class="btn btn-info btn-lg saveIt" role="button">my save button</a>
+          <a class="btn btn-warning btn-lg newOne" role="button">new Note</a>
+          <a class="btn btn-danger btn-lg deleteOne" role="button">delete note</a>
+
+          <input class="note-title" id="note-title" placeholder="Note Title" maxlength="28" type="text">
+          <textarea class="note-textarea" id="note-input" placeholder="Note Text"></textarea>
+
+
+        </div>
+
+
       </div>
     </div>
   </div>
   <script type="text/javascript">
-   
-    $(".saveIt").on("click", function(event) {
+
+    $(".saveIt").on("click", function (event) {
       event.preventDefault();
       var newNote = {
         title: $("#note-title").val().trim(),
         note: $("#note-input").val().trim(),
       };
- 
+
       $.post("http://localhost:3000/api/notes", newNote)
-        .then(function(data) {
+        .then(function (data) {
           console.log("notes.html", data);
           alert("Adding note...");
         });
@@ -144,48 +154,73 @@ html, body {
 
     notesData();
 
-function notesData() {
-    var newContentDiv = $(".listNotes")
+    function notesData() {
+      var newContentDiv = $(".listNotes")
+      var newBlock = $(".block")
 
-    var newURL = 'http://localhost:3000/api/notes'
-    $.ajax({
+      var newURL = 'http://localhost:3000/api/notes'
+      $.ajax({
         url: newURL,
         method: "GET",
         dataType: "json",
         statusCode: {
-            404: function () {
-                alert("not found");
-                return;
-            }
+          404: function () {
+            alert("not found");
+            return;
+          }
         }
 
-    })
-        // this is getting the data from api info"
+      })
+        // this is getting the data from api info for side list"
         .then(function (mydata) {
-            console.log(mydata);
-            for (var i = 0; i < mydata.length; i++) {
-                var userTitle = mydata[i].title;
-                console.log(mydata[i].title);
-                var userNote = mydata[i].note;
+          console.log(mydata);
+          for (var i = 0; i < mydata.length; i++) {
+            var userTitle = mydata[i].title;
+            console.log(mydata[i].title);
+            var userNote = mydata[i].note;
 
-                var divEl = $('<div>').addClass('div-body');
-                var divContentEl = $('<div>').addClass('div-content');
-                var userTitleEl = $('<strong>')
-                var userNoteEl = $('<li>')
+            var divEl = $('<div>').addClass('div-body');
+            // var divContentEl = $('<div>').addClass('div-content');
+            // var userTitleEl = $('<strong>').addClass('list-group-item d-flex justify-content-between align-items-center')
+            // var userNoteEl = $('<li>')
+
+            // userTitleEl.text(userTitle)
+            // userNoteEl.text(userNote)
+
+            // newContentDiv.append(divEl)
+            // divEl.append(divContentEl)
+            // divContentEl.append(userTitleEl)
+            // divContentEl.append(userNoteEl)
+
+            // this is getting the data from api info for block"
+            var newSaveButton = $('<a class="btn btn-info btn-lg saveIt" role="button">save</a>')
+            var noteTextEmpty = $('<textarea>').addClass("note-textarea");
+            var newDeleteButton = $('<a class="btn btn-danger btn-lg deleteOne" role="button">delete</a>')
+            var mainTitleEl = $('<h2>').addClass('note-title');
+            var noteTextEl = $('<textarea>').addClass("note-textarea");
+
+            // // var jumboEl = $('<div>').addClass('jumbotron')
+         
+            // var inputEl = $('<input>').addClass('Note Title');
+            // inputEl.text(userTitle)
+
+            mainTitleEl.text(userTitle)
+            noteTextEl.text(userNote)
+            // userTitleEl.text(userTitle)
+
            
-                userTitleEl.text(userTitle)
-           
-                userNoteEl.text(userNote)
-              
-                newContentDiv.append(divEl)
-                divEl.append(divContentEl)
-                divContentEl.append(userTitleEl)
-                divContentEl.append(userNoteEl)
-               
-            }
+            newBlock.append(divEl)
+            divEl.append(mainTitleEl)
+            divEl.append(noteTextEl)
+            // inputEl.append(userTitle)
+            // userTitleEl.text(userTitle)
+            divEl.append(newSaveButton)
+            divEl.append(newDeleteButton)
+
+          }
         })
 
-}
+    }
 
 
 
