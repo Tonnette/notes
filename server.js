@@ -6,7 +6,7 @@ var path = require("path");
 // Sets up the Express App
 // =============================================================
 var app = express();
-var PORT = 3050;
+var PORT = 3000;
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
@@ -23,11 +23,11 @@ var notes = [
 // Basic route that sends the user first to the AJAX Page
 
 app.get("/notes", function (req, res) {
-    res.sendFile(path.join(__dirname, "notes.html"));
+    res.sendFile(path.join(__dirname, "./public/notes.html"));
 });
 
-app.get("/*", function (req, res) {
-    res.sendFile(path.join(__dirname, "index.html"));
+app.get("/", function (req, res) {
+    res.sendFile(path.join(__dirname, "./public/index.html"));
 });
 
 
@@ -59,13 +59,13 @@ app.post("/api/notes", function (req, res) {
 
     // Using a RegEx Pattern to remove spaces from newCharacter
     // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-    newNote.routeName = newNote.name.replace(/\s+/g, "").toLowerCase();
+    // newNote.routeName = newNote.name.replace(/\s+/g, "").toLowerCase();
 
     console.log(newNote);
 
-    notes.push(newNotes);
+    notes.push(newNote);
 
-    res.json(newNotes);
+    res.json(newNote);
 });
 
 // Starts the server to begin listening

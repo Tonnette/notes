@@ -4,15 +4,23 @@ html, body {
   padding: 0;
 }
 
-.save-note {
+/* .save-note {
   display: none;
-}
+} */
 
 .icons i {
   margin-left: 15px;
   margin-right: 15px;
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+.listNotes {
+  padding-left: 25px;
+}
+
+.myNotesTitle {
+  font-weight: bold;
 }
 
 .note-textarea, .note-title {
