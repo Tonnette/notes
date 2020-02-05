@@ -97,16 +97,24 @@ app.post("/api/notes", function (req, res) {
     })
 });
 
-app.delete("/api/notes/:character", function (req, res) {
-    var chosen = req.params.character;
-    console.log(chosen);
+app.delete("/api/notes/:id", function (req, res) {
+    var chosen = req.params.id;
+    console.log("api test delete"+chosen);
 
-    for (var i = 0; i < notes.length; i++) {
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
+        if (err) {
+            throw err;
+        }
+        // newNotesString = JSON.parse(data);
+        // console.log(newNotesString);
+    });
+
+    for (var i = 0; i < newNotesString.length; i++) {
         if (chosen === newNotesString[i].id) {
             newNotesString.splice(i, 1);
             var newData = JSON.stringify(newNotesString)
 
-            ffs.writeFile("./db/db.json", newData, function (err) {
+            fs.writeFile("./db/db.json", newData, function (err) {
                 if (err) {
                     return console.log(err);
                 }
