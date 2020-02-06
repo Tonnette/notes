@@ -15,8 +15,8 @@ var PORT = process.env.PORT || 3000;
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname,'/public')));
-app.use(express.static(path.join(__dirname,'/db')));
+app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, '/db')));
 
 var notes = [
     {
@@ -42,29 +42,50 @@ fs.readFile('./db/db.json', 'utf8', (err, data) => {
         throw err;
     }
     newNotesString = JSON.parse(data);
-    // console.log(newNotesString);
+    console.log(newNotesString);
 });
 
 
 
 // Displays all notes in JSON api format
 app.get("/api/notes", function (req, res) {
-    return res.json(newNotesString);
+
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
+        if (err) {
+            throw err;
+        }
+        newNotesString = JSON.parse(data);
+        // console.log("what is newNotesString" + newNotesString);
+        // console.log("what is data" + data);
+        return res.json(newNotesString);
+    });
 });
 
 
 // Displays a single note, or returns false
-app.get("/api/notes/:character", function (req, res) {
-    var chosen = req.params.character;
-    console.log(chosen);
-
-    for (var i = 0; i < notes.length; i++) {
-        if (chosen === newNotesString[i].id) {
-            return res.json(newNotesString[i]);
+app.get("/api/notes/:id", function (req, res) {
+    var chosen = req.params.id;
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
+        if (err) {
+            throw err;
         }
-    }
 
-    return res.json(false);
+        // console.log("wehat is chosen" + chosen);
+        // console.log("whatey is reS" + res);
+        // console.log({data})
+        var updatedData = JSON.parse(data);
+
+        for (var i = 0; i < updatedData.length; i++) {
+            if (chosen == updatedData[i].id) {
+                // console.log("what is chosen " + chosen)
+                // console.log("what is data " + updatedData)
+                return res.json(updatedData[i]);
+            }
+        }
+
+        return res.json(false);
+    });
+
 });
 
 // Create New note - takes in JSON input
@@ -72,16 +93,25 @@ app.post("/api/notes", function (req, res) {
     // req.body hosts is equal to the JSON post sent from the user
     // This works because of our body parsing middleware
     var newNote = req.body;
+    console.log("what is newNotesString " + newNotesString);
+    console.log({ newNotesString })
+    let greatestID = 1
+    for (var i = 0; i < newNotesString.length; i++) {
+        if (Number(newNotesString[i].id) > greatestID) {
+            greatestID = Number(newNotesString[i].id)
+        }
+    }
+    var newID = greatestID + 1;
 
-    var newID = newNotesString.length + 1;
 
-    newNote.id = newID.toString();
+
+    newNote.id = String(newID)
 
     // Using a RegEx Pattern to remove spaces from newCharacter
     // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
     // newNote.routeName = newNote.name.replace(/\s+/g, "").toLowerCase();
 
-    console.log(newNote);
+    // console.log(newNote);
 
     newNotesString.push(newNote);
     res.json(newNote);
@@ -99,32 +129,38 @@ app.post("/api/notes", function (req, res) {
 
 app.delete("/api/notes/:id", function (req, res) {
     var chosen = req.params.id;
-    console.log("api test delete"+chosen);
+    // console.log("api test delete" + chosen);
 
-    fs.readFile('./db/db.json', 'utf8', (err, data) => {
+    fs.readFile('./db/db.json', 'utf8', (err, dataString) => {
         if (err) {
             throw err;
         }
-        // newNotesString = JSON.parse(data);
-        // console.log(newNotesString);
+        const data = JSON.parse(dataString)
+        const newData = [];
+        for (var i = 0; i < data.length; i++) {
+
+            if (chosen != data[i].id) {
+                const currentTask = data[i];
+                // console.log(`Adding ${currentTask}`)
+                newData.push(currentTask);
+            }
+        }
+        // console.log(`newData ${newData}`)
+
+        fs.writeFile("./db/db.json", JSON.stringify(newData), function (err) {
+            if (err) {
+                return console.log(err);
+            }
+        });
+        return res.json(newData);
     });
 
-    for (var i = 0; i < newNotesString.length; i++) {
-        if (chosen === newNotesString[i].id) {
-            newNotesString.splice(i, 1);
-            var newData = JSON.stringify(newNotesString)
 
-            fs.writeFile("./db/db.json", newData, function (err) {
-                if (err) {
-                    return console.log(err);
-                }
-            });
-            return res.json(newNotesString);
-        }
-    }
-
-    return res.json(false);
 });
+
+
+
+
 
 // Starts the server to begin listening
 // =============================================================
