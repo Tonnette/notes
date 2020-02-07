@@ -7,11 +7,11 @@ It allows users to delete previously saved notes.
 This application uses node express backend. It retrieves data from a database. 
 
  ## How it was made
- This app was built using Node Express. 
- Routes were set up using app.get 
- Files are read using fs.readFile 
- New info is added using fs.writeFile
- New notes with unique IDs are created using app.post
+ This app was built using Node Express. <br>
+ Routes were set up using app.get <br>
+ Files are read using fs.readFile <br>
+ New info is added using fs.writeFile <br>
+ New notes with unique IDs are created using app.post <br>
  Notes are deleted by using app.delete
  
 
