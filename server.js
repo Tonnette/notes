@@ -3,8 +3,6 @@
 var express = require("express");
 var path = require("path");
 const fs = require("fs");
-const util = require("util");
-const stringify = require("json-stringify-safe");
 
 // Sets up the Express App
 // =============================================================
@@ -77,8 +75,6 @@ app.get("/api/notes/:id", function (req, res) {
 
         for (var i = 0; i < updatedData.length; i++) {
             if (chosen == updatedData[i].id) {
-                // console.log("what is chosen " + chosen)
-                // console.log("what is data " + updatedData)
                 return res.json(updatedData[i]);
             }
         }
@@ -93,8 +89,8 @@ app.post("/api/notes", function (req, res) {
     // req.body hosts is equal to the JSON post sent from the user
     // This works because of our body parsing middleware
     var newNote = req.body;
-    console.log("what is newNotesString " + newNotesString);
-    console.log({ newNotesString })
+    // console.log("what is newNotesString " + newNotesString);
+    // console.log({ newNotesString })
     let greatestID = 1
     for (var i = 0; i < newNotesString.length; i++) {
         if (Number(newNotesString[i].id) > greatestID) {
@@ -102,17 +98,8 @@ app.post("/api/notes", function (req, res) {
         }
     }
     var newID = greatestID + 1;
-
-
-
     newNote.id = String(newID)
-
-    // Using a RegEx Pattern to remove spaces from newCharacter
-    // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-    // newNote.routeName = newNote.name.replace(/\s+/g, "").toLowerCase();
-
-    // console.log(newNote);
-
+  
     newNotesString.push(newNote);
     res.json(newNote);
 
