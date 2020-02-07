@@ -2,7 +2,7 @@
 // =============================================================
 var express = require("express");
 var path = require("path");
-const fs = require("fs");
+var fs = require("fs");
 
 // Sets up the Express App
 // =============================================================
